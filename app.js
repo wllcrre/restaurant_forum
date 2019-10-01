@@ -1,5 +1,6 @@
 const express = require('express')
 const handlebars = require('express-handlebars')
+const db = require('./models') // 引入資料庫
 const app = express()
 const port = 3000
 
@@ -9,6 +10,7 @@ app.set('view engine', 'handlebars')
 
 app.listen(port, () => {
   // console.log("example app listen on port:" + port)
+  db.sequelize.sync() // 跟資料庫同步
   console.log(`example app listen on portxx: ${port}`)
 })
 
