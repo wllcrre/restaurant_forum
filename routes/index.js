@@ -2,7 +2,7 @@ const restController = require('../controllers/restController.js')
 const adminController = require('../controllers/adminController.js')
 const userController = require('../controllers/userController.js')
 
-module.exports = app => { // 此箭頭函式中 app 是一個參數
+module.exports = (app, passport) => { // 記得這邊要接收 passport
 
   app.get('/', (req, res) => res.redirect('/restaurants'))
   app.get('/admin', (req, res) => res.redirect('/admin/restaurants'))
@@ -16,5 +16,8 @@ module.exports = app => { // 此箭頭函式中 app 是一個參數
 
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
-}
 
+  app.get('/signin', userController.signInPage)
+  app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
+  app.get('/logout', userController.logout)
+}
