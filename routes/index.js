@@ -26,6 +26,8 @@ module.exports = (app, passport) => { // 記得這邊要接收 passport
   app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/restaurants'))
   app.get('/admin/restaurants', authenticatedAdmin, adminController.getRestaurants)
 
+  app.get('/admin/restaurants/create', authenticatedAdmin, adminController.createRestaurant)
+
 
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
