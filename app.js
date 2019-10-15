@@ -3,7 +3,7 @@ const handlebars = require('express-handlebars')
 const flash = require('connect-flash')
 const session = require('express-session')
 const passport = require('./config/passport')
-
+const methodOverride = require('method-override')
 
 const db = require('./models') // 引入資料庫
 const bodyParser = require('body-parser') // for http POST, req.body 
@@ -11,6 +11,8 @@ const bodyParser = require('body-parser') // for http POST, req.body
 
 const app = express()
 const port = 3000
+
+app.use(methodOverride('_method'))
 
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
 app.use(flash())
@@ -33,7 +35,7 @@ app.use(bodyParser.urlencoded({ extended: true }))// for http POST, req.body //a
 app.listen(port, () => {
   // console.log("example app listen on port:" + port)
   db.sequelize.sync() // 跟資料庫同步
-  console.log(`example app listen on portxx: ${port}`)
+  console.log(`restaurant_forum app listen on port: ${port}`)
 })
 
 // 引入 routes 並將 app 傳進去，讓 routes 可以用 app 這個物件來指定路由
