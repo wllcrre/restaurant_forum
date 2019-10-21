@@ -5,8 +5,8 @@ const faker = require('faker')
 module.exports = {
   up: (queryInterface, Sequelize) => {
     queryInterface.bulkInsert('Users', [{
-      email: 'root@aa.com',
-      password: bcrypt.hashSync('1234', bcrypt.genSaltSync(10), null),
+      email: 'root@example.com',
+      password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
       isAdmin: true,
       name: 'root',
       createdAt: new Date(),
