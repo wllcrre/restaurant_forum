@@ -3,7 +3,7 @@ const fs = require('fs')
 const Restaurant = db.Restaurant
 
 const imgur = require('imgur-node-api')
-const IMGUR_CLIENT_ID = '168b22280815a8a'
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 // Client secret
 // f5996ad740af6e93434b3166bf85482c98251933
 
