@@ -15,6 +15,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
+
 app.use(methodOverride('_method'))
 
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
