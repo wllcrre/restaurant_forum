@@ -1,5 +1,6 @@
 const restController = require('../controllers/restController.js')
 const adminController = require('../controllers/adminController.js')
+const categoryController = require('../controllers/categoryController.js')
 const userController = require('../controllers/userController.js')
 
 const multer = require('multer')
@@ -30,6 +31,14 @@ module.exports = (app, passport) => { // 記得這邊要接收 passport
 
   app.get('/admin/restaurants/create', authenticatedAdmin, adminController.createRestaurant)
   app.post('/admin/restaurants', authenticatedAdmin, upload.single('image'), adminController.postRestaurant)
+
+  app.get('/admin/categories', authenticatedAdmin, categoryController.getCategories)
+  app.post('/admin/categories', authenticatedAdmin, categoryController.postCategory)
+
+  app.put('/admin/categories/:id', authenticatedAdmin, categoryController.putCategory)
+  app.get('/admin/categories/:id', authenticatedAdmin, categoryController.getCategories)//heree
+
+  app.delete('/admin/categories/:id', authenticatedAdmin, categoryController.deleteCategory)
 
   app.get('/admin/restaurants', authenticatedAdmin, adminController.getRestaurants)
   app.get('/admin/restaurants/:id', authenticatedAdmin, adminController.getRestaurant)
