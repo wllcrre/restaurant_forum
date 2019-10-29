@@ -29,6 +29,7 @@ module.exports = (app, passport) => { // 記得這邊要接收 passport
   app.get('/restaurants/:id', authenticated, restController.getRestaurant)
 
   app.post('/comments', authenticated, commentController.postComment)
+  app.delete('/comments/:id', authenticatedAdmin, commentController.deleteComment)
 
   // 在 /admin/restaurants 底下則交給 adminController.getRestaurants 處理
   app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/restaurants'))
