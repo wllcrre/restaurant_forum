@@ -71,6 +71,8 @@ const adminController = {
   },
 
   putRestaurant: (req, res) => {
+    console.log(req.body)
+
     if (!req.body.name) {
       req.flash('error_messages', "name didn't exist")
       return res.redirect('back')
