@@ -1,6 +1,8 @@
 const bcrypt = require('bcrypt-nodejs')
 const db = require('../models')
 const User = db.User
+const Comment = db.Comment
+const Restaurant = db.Restaurant
 
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
@@ -51,7 +53,13 @@ const userController = {
   },
 
   getUser: (req, res) => {
-    return User.findByPk(req.params.id).then(user => {
+    return User.findByPk(req.params.id, {
+      include:
+      {
+        model: Comment,
+        include: [Restaurant]
+      }
+    }).then(user => {
       return res.render('users', {
         user: user
       })
@@ -74,37 +82,6 @@ const userController = {
       })
     })
   },
-
-  putUsers_org: (req, res) => {
-
-    let uid = Number(req.params.id)
-
-    if (uid !== req.user.id) {
-      req.flash('error_messages', "you can't edit other user's profile")
-      // return res.redirect('back')
-      res.redirect('/users/' + req.user.id)
-    }
-
-
-    if (!req.body.name) {
-      req.flash('error_messages', "name didn't exist")
-      return res.redirect('back')
-    }
-
-    return User.findByPk(req.params.id).then((user) => {
-      user.update({
-        name: req.body.name
-      }).then((user) => {
-        req.flash('success_messages', 'user was successfully to update')
-        res.redirect('/users/' + req.params.id)
-      })
-    })
-  },
-
-
-
-
-
   putUsers: (req, res) => {
     let uid = Number(req.params.id)
 
