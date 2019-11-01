@@ -57,6 +57,26 @@ let restController = {
       })
     })
   },
+
+  getDashboard: (req, res) => {
+
+    let whereQuery = {}
+    whereQuery['RestaurantId'] = req.params.id
+
+    // Restaurant.findAndCountAll({ include: Category, where: whereQuery, offset: offset, limit: pageLimit })
+
+    return Restaurant.findByPk(req.params.id, { include: [Category] })
+      .then(restaurant => {
+        Comment.findAndCountAll({ where: whereQuery })
+          .then(comment => {
+            return res.render('dashboard', {
+              comments_count: comment.count,
+              restaurant: restaurant
+            })
+          })
+      })
+  },
+
   getFeeds: (req, res) => {
     return Restaurant.findAll({
       limit: 10,
