@@ -43,12 +43,6 @@ let restController = {
     })
   },
   getRestaurant: (req, res) => {
-
-    //heree update viewCounts
-    // task.update({
-    //   title: 'a very different title now'
-    // }).then(() => { })
-
     return Restaurant.findByPk(req.params.id, {
       include: [
         Category,
@@ -58,11 +52,8 @@ let restController = {
         }
       ]
     }).then(restaurant => {
-
       let viewCounts = restaurant.viewCounts || 0
       viewCounts = viewCounts + 1
-
-      console.log('---------->viewCounts:' + viewCounts)
 
       restaurant.update({ viewCounts: viewCounts }).then((restaurant) => {
         return res.render('restaurant', {
@@ -76,8 +67,6 @@ let restController = {
 
     let whereQuery = {}
     whereQuery['RestaurantId'] = req.params.id
-
-    // Restaurant.findAndCountAll({ include: Category, where: whereQuery, offset: offset, limit: pageLimit })
 
     return Restaurant.findByPk(req.params.id, { include: [Category] })
       .then(restaurant => {
