@@ -58,6 +58,9 @@ module.exports = (app, passport) => { // 記得這邊要接收 passport
 
   app.delete('/admin/restaurants/:id', authenticatedAdmin, adminController.deleteRestaurant)
 
+  app.post('/favorite/:restaurantId', authenticated, userController.addFavorite)
+  app.delete('/favorite/:restaurantId', authenticated, userController.removeFavorite)
+
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
 
