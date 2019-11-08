@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
     //追縱 User 的人(粉絲) Followers
     User.belongsToMany(models.User, {
       through: models.Followship,
-      foreignKey: 'followeringId',
+      foreignKey: 'followingId',
       as: 'Followers'
     })
   };
