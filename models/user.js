@@ -20,6 +20,20 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'UserId',
       as: 'LikedRestaurants'
     })
+
+    //被 User 追縱的人(明星) Followings
+    User.belongsToMany(models.User, {
+      through: models.Followship,
+      foreignKey: 'followerId',
+      as: 'Followings'
+    })
+
+    //追縱 User 的人(粉絲) Followers
+    User.belongsToMany(models.User, {
+      through: models.Followship,
+      foreignKey: 'followeringId',
+      as: 'Followers'
+    })
   };
   return User;
 };
