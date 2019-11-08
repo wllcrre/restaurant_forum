@@ -64,6 +64,9 @@ module.exports = (app, passport) => { // 記得這邊要接收 passport
   app.post('/like/:restaurantId', authenticated, userController.addLike)
   app.delete('/like/:restaurantId', authenticated, userController.removeLike)
 
+  app.post('/following/:userId', authenticated, userController.addFollowing)
+  app.delete('/following/:userId', authenticated, userController.removeFollowing)
+
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
 
