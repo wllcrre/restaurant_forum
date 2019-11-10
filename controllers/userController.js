@@ -58,10 +58,25 @@ const userController = {
   getUser: (req, res) => {
     return User.findByPk(req.params.id, {
       include:
-      {
-        model: Comment,
-        include: [Restaurant]
-      }
+        [
+          {
+            model: Comment,
+            include: [Restaurant]
+          },
+          {
+            model: Restaurant,
+            as: "FavoritedRestaurants"
+          },
+          {
+            model: User,
+            as: "Followers"
+          },
+          {
+            model: User,
+            as: "Followings"
+          }
+
+        ]
     }).then(user => {
       return res.render('users', {
         user: user
@@ -104,7 +119,7 @@ const userController = {
     if (file) {
 
       console.log('file exits heree')
-      imgur.setClientID(IMGUR_CLIENT_ID);
+      imgur.setClientID(IMGUR_CLIENT_ID)
       imgur.upload(file.path, (err, img) => {
         console.log('heree imgLink:' + img.data.link)
 
