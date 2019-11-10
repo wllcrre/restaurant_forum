@@ -100,7 +100,12 @@ let restController = {
     let whereQuery = {}
     whereQuery['RestaurantId'] = req.params.id
 
-    return Restaurant.findByPk(req.params.id, { include: [Category] })
+    return Restaurant.findByPk(req.params.id, {
+      include: [
+        Category,
+        { model: User, as: 'FavoritedUsers' }
+      ]
+    })
       .then(restaurant => {
         Comment.findAndCountAll({ where: whereQuery })
           .then(comment => {
