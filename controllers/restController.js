@@ -2,6 +2,7 @@ const db = require('../models')
 const Restaurant = db.Restaurant
 const Category = db.Category
 const Comment = db.Comment
+const Favorite = db.Favorite
 const User = db.User
 const pageLimit = 10
 
@@ -44,6 +45,33 @@ let restController = {
       })
     })
   },
+
+
+  //please ref getTopUsers:
+  getTopRestaurants: (req, res) => {
+    return Restaurant.findAll({
+      include: [
+        { model: User, as: 'FavoritedUsers' }
+      ],
+      offset: 0,
+      limit: 10
+    }).then(restaurants => {
+      // 整理 restaurants 資料
+      restaurants = restaurants.map(r => ({
+        ...r.dataValues,
+        description: r.dataValues.description.substring(0, 50),
+        // 計算收藏者人數
+        FavoritedUsersCount: r.FavoritedUsers.length,
+        isFavorited: req.user.FavoritedRestaurants.map(d => d.id).includes(r.id)
+      }))
+
+      // 依收藏者人數排序清單
+      restaurants = restaurants.sort((a, b) => b.FavoritedUsersCount - a.FavoritedUsersCount)
+
+      return res.render('topRestaurants', { restaurants: restaurants })
+    })
+  },
+
   getRestaurant: (req, res) => {
     return Restaurant.findByPk(req.params.id, {
       include: [
