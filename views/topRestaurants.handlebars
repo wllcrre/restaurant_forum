@@ -35,20 +35,21 @@
             <span class="badge badge-secondary">收藏數:{{this.FavoritedUsersCount}}</span>
             <p class="card-text">{{this.description}}</p>
 
-            <div class="row">
-              <a class="mr-3" href="/restaurants/{{this.id}}">
-                <button type="submit" class="btn btn-primary">Show</button>
-              </a>
+            <a class="mr-3" href="/restaurants/{{this.id}}"><button type="button"
+                class="btn btn-primary">Show</button></a>
+            {{#if this.isFavorited }}
+            <button type="submit" class="btn btn-danger">
+              <form action="/favorite/{{this.id}}?_method=DELETE" method="POST"></form>移除最愛
+            </button>
+            {{else}}
+            <button type="submit" class="btn btn-primary">
+              <form action="/favorite/{{this.id}}" method="POST"></form>加到最愛
+            </button>
+            {{/if}}
 
-              {{#if this.isFavorited }}
-              <form action="/favorite/{{this.id}}?_method=DELETE" method="POST"><button type="submit"
-                  class="btn btn-danger">移除最愛</button></form>
-              {{else}}
-              <form action="/favorite/{{this.id}}" method="POST"><button type="submit"
-                  class="btn btn-primary">加到最愛</button>
-              </form>
-              {{/if}}
-            </div>
+
+
+
           </div>
         </div>
       </div>
