@@ -49,4 +49,4 @@ app.listen(port, () => {
 })
 
 // 引入 routes 並將 app 傳進去，讓 routes 可以用 app 這個物件來指定路由
-require('./routes')(app, passport) //需要放在 app.js 的最後一行 // 把 passport 傳入 routes
+require('./routes')(app) //需要放在 app.js 的最後一行
