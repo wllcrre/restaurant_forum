@@ -23,7 +23,6 @@ const authenticated = (req, res, next) => {
 }
 const authenticatedAdmin = (req, res, next) => {
   if (req.isAuthenticated()) {
-    routes.js
     if (req.user.isAdmin) { return next() }
     return res.redirect('/')
   }
