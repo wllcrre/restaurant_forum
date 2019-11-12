@@ -14,11 +14,29 @@ const adminService = {
     return Restaurant.findAll({
       include: [Category]
     }).then(restaurants => {
-      // return res.render('admin/restaurants', { restaurants: restaurants })
       callback({ restaurants: restaurants })
     })
-  }
+  },
+  getRestaurant: (req, res, callback) => {
+    return Restaurant.findByPk(req.params.id, { include: [Category] }).then(restaurant => {
+      callback({ restaurant: restaurant })
+    })
 
+  },
+
+  getCategories: (req, res, callback) => {
+    return Category.findAll().then(categories => {
+
+      if (req.params.id) {
+        return Category.findByPk(req.params.id).then(category => {
+          callback({ categories: categories, category: category })
+        })
+      } else {
+        callback({ categories: categories })
+      }
+    })
+  },
 }
+
 
 module.exports = adminService
