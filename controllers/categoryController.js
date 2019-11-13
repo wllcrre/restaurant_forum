@@ -1,5 +1,6 @@
 const db = require('../models')
 const Category = db.Category
+const adminService = require('../services/adminService.js')
 
 const categoryController = {
 
@@ -17,10 +18,14 @@ const categoryController = {
   },
 
   postCategory: (req, res) => {
-    return Category.create({
-      name: req.body.name
-    }).then(() => {
-      return res.redirect('/admin/categories')
+    adminService.postCategory(req, res, (data) => {
+      if (data['status'] === 'error') {
+        req.flash('error_messages', data['message'])
+        return res.redirect('back')
+      } else {
+        req.flash('success_messages', data['message'])
+        res.redirect('/admin/categories')
+      }
     })
   },
 
