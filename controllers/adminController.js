@@ -97,6 +97,7 @@ const adminController = {
   deleteRestaurant: (req, res) => {
     adminService.deleteRestaurant(req, res, (data) => {
       if (data['status'] === 'success') {
+        req.flash('success_messages', data['message'])
         return res.redirect('/admin/restaurants')
       }
     })
