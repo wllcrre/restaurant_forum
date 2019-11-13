@@ -41,6 +41,7 @@ app.engine('handlebars', handlebars({
 
 app.set('view engine', 'handlebars')
 app.use(bodyParser.urlencoded({ extended: true }))// for http POST, req.body //app.use: 所有的請求都會先被 bodyParser 進行處理
+app.use(bodyParser.json())
 
 app.listen(port, () => {
   // console.log("example app listen on port:" + port)
