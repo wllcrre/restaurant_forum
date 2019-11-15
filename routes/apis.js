@@ -3,10 +3,15 @@ const router = express.Router();
 
 const adminController = require('../controllers/apis/adminController')
 const categoryController = require('../controllers/apis/categoryController')
+const userController = require('../controllers/apis/userController.js')
 
 // 引入 multer 並設定上傳資料夾 
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
+
+
+// JWT signin
+router.post('/signin', userController.signIn)
 
 
 router.get('/admin/categories', categoryController.getCategories)
