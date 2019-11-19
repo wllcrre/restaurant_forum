@@ -29,7 +29,7 @@ const authenticatedAdmin = (req, res, next) => {
   res.redirect('/signin')
 }
 
-// 在 /restaurants 底下則交給 restController.getRestaurants 來處理
+// restaurant
 router.get('/', authenticated, (req, res) => res.redirect('/restaurants'))
 router.get('/restaurants', authenticated, restController.getRestaurants)
 router.get('/restaurants/top', authenticated, restController.getTopRestaurants)
@@ -37,34 +37,33 @@ router.get('/restaurants/feeds', authenticated, restController.getFeeds)
 router.get('/restaurants/:id', authenticated, restController.getRestaurant)
 router.get('/restaurants/:id/dashboard', authenticated, restController.getDashboard)
 
+// comment
 router.post('/comments', authenticated, commentController.postComment)
 router.delete('/comments/:id', authenticatedAdmin, commentController.deleteComment)
 
-// 在 /admin/restaurants 底下則交給 adminController.getRestaurants 處理
-router.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/restaurants'))
-
-router.get('/admin/restaurants/create', authenticatedAdmin, adminController.createRestaurant)
-router.post('/admin/restaurants', authenticatedAdmin, upload.single('image'), adminController.postRestaurant)
-
+// admin category
 router.get('/admin/categories', authenticatedAdmin, categoryController.getCategories)
 router.post('/admin/categories', authenticatedAdmin, categoryController.postCategory)
-
 router.put('/admin/categories/:id', authenticatedAdmin, categoryController.putCategory)
 router.get('/admin/categories/:id', authenticatedAdmin, categoryController.getCategories)//heree
-
 router.delete('/admin/categories/:id', authenticatedAdmin, categoryController.deleteCategory)
 
+// admin restaurant
+router.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/restaurants'))
+router.get('/admin/restaurants/create', authenticatedAdmin, adminController.createRestaurant)
+router.post('/admin/restaurants', authenticatedAdmin, upload.single('image'), adminController.postRestaurant)
 router.get('/admin/restaurants', authenticatedAdmin, adminController.getRestaurants)
 router.get('/admin/restaurants/:id', authenticatedAdmin, adminController.getRestaurant)
-
 router.get('/admin/restaurants/:id/edit', authenticatedAdmin, adminController.editRestaurant)
 router.put('/admin/restaurants/:id', authenticatedAdmin, upload.single('image'), adminController.putRestaurant)
+router.delete('/admin/restaurants/:id', authenticatedAdmin, adminController.deleteRestaurant)
 
+// admin user
 router.get('/admin/users', authenticatedAdmin, adminController.editUsers)
 router.put('/admin/users/:id', authenticatedAdmin, adminController.putUsers)
 
-router.delete('/admin/restaurants/:id', authenticatedAdmin, adminController.deleteRestaurant)
 
+// social 
 router.post('/favorite/:restaurantId', authenticated, userController.addFavorite)
 router.delete('/favorite/:restaurantId', authenticated, userController.removeFavorite)
 
@@ -74,6 +73,7 @@ router.delete('/like/:restaurantId', authenticated, userController.removeLike)
 router.post('/following/:userId', authenticated, userController.addFollowing)
 router.delete('/following/:userId', authenticated, userController.removeFollowing)
 
+// user
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
 

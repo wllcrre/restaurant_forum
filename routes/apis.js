@@ -22,23 +22,28 @@ const authenticatedAdmin = (req, res, next) => {
   }
 }
 
+// restaurant
+// comment
 
-// JWT signin
-router.post('/signin', userController.signIn)
-router.post('/signup', userController.signUp)
-
-
+// admin category
 router.get('/admin/categories', authenticatedAdmin, categoryController.getCategories)
 router.post('/admin/categories', authenticatedAdmin, categoryController.postCategory)
 router.put('/admin/categories/:id', authenticatedAdmin, categoryController.putCategory)
 router.delete('/admin/categories/:id', authenticatedAdmin, categoryController.deleteCategory)
 
-
+// admin restaurant
 router.get('/admin/restaurants', authenticatedAdmin, adminController.getRestaurants)
 router.get('/admin/restaurants/:id', authenticatedAdmin, adminController.getRestaurant)
 router.post('/admin/restaurants', authenticatedAdmin, upload.single('image'), adminController.postRestaurant)
 router.put('/admin/restaurants/:id', authenticatedAdmin, upload.single('image'), adminController.putRestaurant)
 router.delete('/admin/restaurants/:id', authenticatedAdmin, adminController.deleteRestaurant)
 
+// admin user
+
+// social 
+
+// user
+router.post('/signin', userController.signIn)
+router.post('/signup', userController.signUp)
 
 module.exports = router
