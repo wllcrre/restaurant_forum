@@ -101,7 +101,7 @@ const adminService = {
             CategoryId: req.body.categoryId
           })
             .then((restaurant) => {
-              callback({ status: "success", message: "restaurant was successfully created" })
+              callback({ status: "success", message: "restaurant was successfully updated" })
             })
         })
   },
@@ -130,52 +130,32 @@ const adminService = {
       })
   },
 
-  getCategories: (req, res, callback) => {
-    return Category.findAll().then(categories => {
 
-      if (req.params.id) {
-        return Category.findByPk(req.params.id).then(category => {
-          callback({ categories: categories, category: category })
-        })
+  editUsers: (req, res, callback) => {
+    return User.findAll().then(users => {
+      callback({ users: users })
+      // return res.render('admin/users', { users: users })
+    })
+  },
+
+  putUsers: (req, res, callback) => {
+    return User.findByPk(req.params.id).then((user) => {
+
+      let userIsAdmin
+      if (user.isAdmin === true) {
+        userIsAdmin = false
       } else {
-        callback({ categories: categories })
+        userIsAdmin = true
       }
+
+      user.update({
+        isAdmin: userIsAdmin
+      }).then((user) => {
+        callback({ status: "success", message: "user was successfully to update" })
+      })
     })
   },
 
-  postCategory: (req, res, callback) => {
-    if (!req.body.name) {
-      callback({ status: "error", message: "name didn\'t exist" })
-    } else {
-      return Category.create({
-        name: req.body.name
-      }).then(() => {
-        callback({ status: "success", message: "category was successfully created" })
-      })
-    }
-  },
-
-  putCategory: (req, res, callback) => {
-    if (!req.body.name) {
-      callback({ status: "error", message: "name didn\'t exist" })
-    } else {
-      return Category.findByPk(req.params.id).then((category) => {
-        category.update({
-          name: req.body.name
-        })
-      }).then(() => {
-        callback({ status: "success", message: "category was successfully modified" })
-      })
-    }
-  },
-
-  deleteCategory: (req, res, callback) => {
-    return Category.findByPk(req.params.id).then((category) => {
-      category.destroy()
-    }).then(() => {
-      callback({ status: "success", message: "category was successfully delete" })
-    })
-  }
 
 }
 

@@ -5,6 +5,7 @@ const passport = require('../config/passport')
 const adminController = require('../controllers/apis/adminController')
 const categoryController = require('../controllers/apis/categoryController')
 const userController = require('../controllers/apis/userController.js')
+const restController = require('../controllers/apis/restController.js')
 
 // 引入 multer 並設定上傳資料夾 
 const multer = require('multer')
@@ -23,6 +24,11 @@ const authenticatedAdmin = (req, res, next) => {
 }
 
 // restaurant
+router.get('/restaurants', authenticated, restController.getRestaurants)
+router.get('/restaurants/top', authenticated, restController.getTopRestaurants)
+router.get('/restaurants/feeds', authenticated, restController.getFeeds)
+router.get('/restaurants/:id', authenticated, restController.getRestaurant)
+router.get('/restaurants/:id/dashboard', authenticated, restController.getDashboard)
 // comment
 
 // admin category

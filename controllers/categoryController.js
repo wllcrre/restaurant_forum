@@ -1,24 +1,24 @@
 const db = require('../models')
 const Category = db.Category
-const adminService = require('../services/adminService.js')
+const categoryService = require('../services/categoryService')
 
 const categoryController = {
 
   getCategories: (req, res) => {
-    return Category.findAll().then(categories => {
 
-      if (req.params.id) {
-        return Category.findByPk(req.params.id).then(category => {
-          return res.render('admin/categories', { categories: categories, category: category })
-        })
+    categoryService.getCategories(req, res, (data) => {
+      if (data['status'] === 'error') {
+        req.flash('error_messages', data['message'])
+        return res.redirect('back')
       } else {
-        return res.render('admin/categories', { categories: categories })
+        req.flash('success_messages', data['message'])
+        return res.render('admin/categories', data)
       }
     })
   },
 
   postCategory: (req, res) => {
-    adminService.postCategory(req, res, (data) => {
+    categoryService.postCategory(req, res, (data) => {
       if (data['status'] === 'error') {
         req.flash('error_messages', data['message'])
         return res.redirect('back')
@@ -30,7 +30,7 @@ const categoryController = {
   },
 
   putCategory: (req, res) => {
-    adminService.putCategory(req, res, (data) => {
+    categoryService.putCategory(req, res, (data) => {
       if (data['status'] === 'error') {
         req.flash('error_messages', data['message'])
         return res.redirect('back')
@@ -42,7 +42,7 @@ const categoryController = {
   },
 
   deleteCategory: (req, res) => {
-    adminService.deleteCategory(req, res, (data) => {
+    categoryService.deleteCategory(req, res, (data) => {
       if (data['status'] === 'success') {
         req.flash('success_messages', data['message'])
         return res.redirect('/admin/categories')
