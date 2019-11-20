@@ -52,4 +52,6 @@ router.delete('/admin/restaurants/:id', authenticatedAdmin, adminController.dele
 router.post('/signin', userController.signIn)
 router.post('/signup', userController.signUp)
 
+router.get('/users/top', authenticated, userController.getTopUser)
+
 module.exports = router

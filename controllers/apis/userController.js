@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt-nodejs')
 const db = require('../../models')
+const userService = require('../../services/userService.js')
 const User = db.User
 
 // JWT
@@ -57,6 +58,13 @@ let userController = {
         }
       })
     }
+  },
+
+  //heree
+  getTopUser: (req, res) => {
+    userService.getTopUser(req, res, (data) => {
+      return res.json(data)
+    })
   },
 }
 
